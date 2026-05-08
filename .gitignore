@@ -1,0 +1,33 @@
+# SWI-Prolog specific files
+*.qlf
+*.o
+*.so
+*.dll
+*.dylib
+*.journal
+*.sav
+*.prc
+
+# Editor/IDE specific files
+.vscode/
+.idea/
+.cursor-cache/
+.windsurf/
+*.swp
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Logs and temp files
+*.log
+*.tmp
+
+# Secrets or config overrides
+.env
+*.key
+*.pem
+*.crt
+
+# Pack system (if using local packs)
+packs/
