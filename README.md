@@ -86,6 +86,23 @@ The main engine predicate `eliza(+Input, -Response)` uses `findall/3` and `sort/
 
 ---
 
+## Prolog Implementation of Shrader's 1973 BASIC Program
+
+The file `eliza_shrader_1973.pl` is a SWI-Prolog translation of Jeff Shrager's 1973 BASIC ELIZA variant (as published in *Creative Computing*). It preserves the classic keyword scan, conjugation swaps, rotating response ranges, repeated-input handling, and an interactive conversation loop.
+
+Run it in SWI-Prolog:
+
+1. Start SWI-Prolog:
+   - `swipl`
+2. Load the program:
+   - `[eliza_shrader_1973].`
+3. Start the interactive loop:
+   - `eliza_run.`
+4. Exit the ELIZA loop:
+   - Type `bye` or `bye.` at the `You:` prompt.
+
+---
+
 ## References
 
 - Weizenbaum, J. (1966). *ELIZA — A Computer Program For the Study of Natural Language Communication Between Man and Machine*. *Communications of the ACM*, 9(1), 36–45. (`reference/weizenbaum.eliza.1966.pdf`)
