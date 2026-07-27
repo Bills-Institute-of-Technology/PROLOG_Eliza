@@ -1,0 +1,956 @@
+ :               " :i                                         .. :,-.:: . . .                                 :                                                                                                                            :   -   .      .   .
+
+                                                 ,                :    .          •       ..
+                                                                                                                                                              :    ...
+
+ : ii                                                             ;!,:                    :
+                                                                                                                        .                        •       .
+
+
+
+
+ •       •                  i                                                         "        "    :
+
+
+
+
+                                                                                                              ¢ompu aI cma
+             •      .       '...         •   . . . . . . . . . .                 ..        •   ..
+
+                                                                                                                                                                                                                                                                                                                ---":t .7:g~~
+                                             :::: :i                                                                •           "   .:       :       "       " "   •     "   :   ;   .   i   •
+                                                                                                                                                                                                              •    .   •     .        ..
+
+
+
+
+                 1 " 5 . "                           . . .
+                                                                                                                            ~            i               :                       :
+•            .          •          ..            .       .:       :.   .'~                              ~..
+
+.:   •                             . :                        ,              :        •
+                                                                                                                                                                                                                                                                                          :-: ; ;: i
+                                                                                                                                                                                                                                                              A. G. O E T T I N G E R ,   Editor
+
+
+     ELIZA A Computer Program                                                                                                                                                                      Tile object of this paper is to cause just such a re-
+                                                                                                                                                                                                 evaln~tion of the program about to be "explained". Few }
+     For the Study of Natural Language
+                                                                                                                                                                                                                                                                                                     4
+
+                                                                                                                                                                                                 programs ever needed it more.
+                                                                                                                                                                                                                                                                                                                 7:~.S C:
+                                                                                                                                                                                                 ELIZA Prograrn                                                                                      }
+     Communication Between Man
+                                                                                                                                                                                                     E L I Z A is a program which makes naturM hmguage
+     And Machine                                                                                                                                                                                 conversation with a Colnputer possible. Its present imple-        5)~.;. ~~-!
+                                                                                                                                                                                                 mentation is oa the MAC time-sharing system at MIT. i:                                                                     o
+
+
+
+
+     ,JosEPh                                          ~VEIZENBA UM                                                                                                                               I t is written in 5lAD-SLIP [4] for the IBM 7091. Its name        7?27E
+     Massach.usclls [nshl-ute qf Tcchnu[ogg,* Cambridge, Mass.                                                                                                                                   was chosen to emphasize that it nmy be incrementally
+                                                                                                                                                                                                                                                                   :2:~:
+                                                                                                                                                                                                 improved by its users, since its language abilities may be
+                                                                                                                                                                                                 continually improved by a "teacher". Like the Eliza 0!              7~9j ~
+    ELIZA is a program operating within the MAC time-sharing                                                                                                                                     Pygmalion fame, it (ran be made to appear even more
+ system at MIT which makes certain kinds of natural language                                                                                                                                     civilized, t,he relation of appearance to realiW, however,
+ conversation between man and computer possible. Input sen-                                                                                                                                      remaining in ~he donmin of the playwright.
+ tences are analyzed on the basis of decomposition rules which                                                                                                                                       For ll~e present purpose it is sufficient to characterize     :7;2: Y :?
+ are triggered by key words appearing in the input text.                                                                                                                                         the ~[A() system as one which permits an individual to
+ Responses are generated by reassembly rules associated with                                                                                                                                     operate a full seale computer from a remotely located type-
+ selected decomposition rules. The fundamental technical prob-                                                                                                                                   writer. The individual operator has the illusion thai, he is      75~.7c_'-5
+ lems with which ELIZA is concerned are: (1) the identification of
+ key words, (2) the discovery of minimal context, (3) the choice
+                                                                                                                                                                                                 the sole riser of the computer complex, while in facl~ others
+                                                                                                                                                                                                                                                               } :~:<:..
+                                                                                                                                                                                                                                                                                                         }
+                                                                                                                                                                                                 may be "time-sharing" the system with him. What is
+ of appropriate transformations, (4) generation of responses in                                                                                                                                  important here is that the computer can read messages }:
+ the absence of key words, and (5) the provision of an editing                                                                                                                                   typed on the typewriter and respond by writing oil the
+ capability for ELIZA "scripts". A discussion of some psychologi-                                                                                                                                same instrument. %'he time between the computer's
+ cal issues relevant to the ELIZA approach as well as of future                                                                                                                                                                                                    -.5~::a
+                                                                                                                                                                                                 receipt of a message and the appearance of its response is
+ developments concludes the paper.                                                                                                                                                               a function of the program controlling the dialogue and of
+     Introduction                                                                                                                                                                                such MAC system parmneters as the number of users
+                                                                                                                                                                                                 currently eon'esponding with the system. These latter
+   It is said that• to explain is to explain away. This maxim                                                                                                                                    parameters generally contribute so little to the overall
+is nowhere so well fulfilled as in the area of computer                                                                                                                                          response time that conversational interaction with the
+programming, especially in what is ealled heuristic pro-                                                                                                                                         computer need never involve truly intolerable delays.
+gramming and artifieiM intelligence. For in those realms                                                                                                                                             When in conversation with ELIZA, tile user types in :: L 2: .:                                               . i :
+
+machines are made to behave in wondrous ways, often                                                                                                                                              some statement or set of statements in natm'al language
+suftieient to dazzle even the most experim~eed observer.                                                                                                                                         using normal punetua.tion and sentence structures. Only i. :::!7:
+But once a particular program is unmasked, once its                                                                                                                                              the question mark may not be used, because it is inter- i             );4p                                               yL>
+
+inner workings are explained in language sufficiently plain                                                                                                                                      preted as a line delete character by the MAC system. The
+to induce understanding, its magic crumbles away; iL                                                                                                                                             user's sratement is terminated by a double carriage return
+st~mds revealed as a mere collection of procedures, each                                                                                                                                         which serves to turn eontrol over to ELIZA. E L I Z A Ithen         >>7-
+quite comprehensible. The observer says to himself "I                                                                                                                                            analyzes the user's statement and generates some response
+could have written that". With that thought he moves the                                                                                                                                                                                                        ::   ) :2>J2
+program in question from the shelf m~trked "intelligent",
+                                                                                                                                                                                                 whieh it types out.. Control is then again with the user.
+                                                                                                                                                                                                     A ltypieal conversation is the following:
+                                                                                                                                                                                                                                                                                                         {
+to that reserved for curios, fit to be discussed only with
+                                                                                                                                                                                                 M e n a r e all alike.                                                                                                    %
+people less enlightened than he.                                                                                                                                                                 IN WHAT WAY
+                                                                                                                                                                                                 T h e y ' r e a l w a y s b u g g i n g u s a b o u t s o m e t h i n g or o t h e r .
+     W o r k r e p o r t e d h e r e i n was s u p p o r t e d (iu p r o t ) b y P r o j e c t M A C ,                                                                                           C A N Y()U T H I N K (H: A S P E C I F I C E X A M P L E                                                    i::i ::7
+a n _\-lIT r e s e a r c h p r o g r a m s p o n s o r e d b y t h e Advm~ced R e s e a r c h                                                                                                    Well, m y b o y f r i e n d m a d e me come here.
+                                                                                                                                                                                                                                                                                                             G{     • )i :
+P r , , j e c t s Aget,cy, l)~l)ar~met~t ~,1" l)ofense, u n d e r Office of N a v a l                                                                                                            YOUR BOYFRIEND                         MAI)E YOU COME HERE                                                  ::.73: ::::,
+R e s e a r c h C o n t r a c t N u m b e r Nora'-4102(01).                                                                                                                                      tie s a y s i ' m d e p r e s s e d m u c h of t h e t i m e .                                              i:-(-:
+      * D e p a r t m e n t of E l e e i r i e a l E n g i n e e r i n g .                                                                                                                       [ AM SORRY TO HEAR YOU ARE DEPRESSED
+
+
+36                                              Comnutnieations                                                   o f t h e .~(',M                                                                                                         %olume 9 / Number                 / / January.,    1966
+
+                                                                                                                                                                                                                                                                                                   2.:
+                       i t ' ~ ~=~e. !. ant t m h a p p y .                                                                      occurring in the input message.
+                       i)() ~ 0U TitlNK COMING IIERE WILl, IiELP YOU NOT TO                                                         (2) Tile identification of some minimal context within
+                             t@; i T N i I A P P Y
+                                                                                                                                 which the chosen keyword at)pears; e.g., if the keyword is
+                       i >cod s o m e help, tidal m,,teh s e e m s certain.
+                       "G'I~AT W O L ' I , D I T M E A N TO Y O U IF YOU G O T S O M E I I E L P                                 "you", is it followed by the word " a r e " (in which ease an
+                       l'c, ri~ ps I c o u l d learn ~o get a h m g v , ith m y m o t h e r .                                    assertion is probably being made).
+                       2-.f::LL 2~ii:: M O R E A B O U T Y O U E F A M I L Y                                                        (3) The choice of an appropriate transformation rule
+                       ),[5" - m n h e r t a k e s care of me,                                                                   and, of course, the making of the transformation itself.
+                       WiI() EI,SE IN ¥0UR FAMILY TAKES CAiIE 0F YOU
+                                                                                                                                    (4) The provision of mechanism that will permit
+                       ),iy f a t h e r .
+                       YO[/R FATHER                                                                                              E L I Z A to respond "intelligently" when the input text
+                       5-,)u are like m y f a t h e r in s o m e ways.                                                          contained no keywords.
+~t s u c h a           WiIAT RESEMBLANCE                       DO YOU SEE                                                           (5) The provision of machinery that facilitates editing,
+) l a i n e d . i.     Y o u are n o t vet',," aggressive b u t 1 t h i n k y o u d o n ' t wa.t~.t me to                        particularly extension, of the script on the script writing
+                             notice that.
+                                                                                                                                 level.
+                       W H A T M A K E S Y O U T t t I N K I AM N O T V E R ~ A G G R E S S I V E
+                       ~'ou dolt'; a r g u e w i t h me.                                                                            There are, of course, the usual constraints dictated by
+                       W I l Y 1)O Y O U T H I N K I D O N ' T A R G U E W I T H Y O U                                           the need to be eeononfical in the use of computer time and
+t r a l langu
+                       "~-(}u are a f r a i d of me,                                                                            storage space.
+~resent, inn:          D O E S i T P L E A S E Y O U T O B E I , I E \ ' E I AM A F R A [ I ) O F Y O U                             The central issue is clearly one of text manipulation,
+t e a l at _1[         M y far h e r is a f r a i d of e v e r y b o d y .
+                                                                                                                                 and at the heart of that issue is the concept of the trans-
+~94. Its n~            W H A T E L S E COMES TO M I N D W t I E N Y O U T H I N K OF
+                             Y()(-II F A T H E R                                                                                formation rule which has been said to be associated with
+inereme~t:.
+                       Bullies.                                                                                                  certain keywords. The meehanisins subsumed under the
+ilities mat"
+                       DOES THAT HA\-E ANYTtIING TO DO WITH THE FACT                                                             sloga.n "transformation rule" are a number of SLIP func-
+   t h e Eli~e.              TItAT YOUR BOYFR IENI) MADE YOU COME HERE                                                           tions which serve to (1) decompose a data string according
+t r e v e n 1~:
+                       T h e capitalized lines are the machine responses.                                                        to certain criteria, hence to test the string as to whether it
+i t y , howe;
+                            T h e gross procedure of the program is quite simple; the                                            satisfies these criteria or not, and (2) to reassemble a
+                       text: is read and inspected for the presence of a keyword.                                                decomposed string according to certain assembly specifica-
+) cha.racte
+                       i f such a word is found, the sentence is transformed                                                     tions.
+ individuai
+                       according to a rule associated with the keyword, if not a                                                    While this is not the i)lace to discuss these functions in
+  l o e a t e d t~
+                       content-free renmrk or, under certain conditions, an earlier                                              all their detail (or even to reveal their full power and
+i o n that ii
+                       t r a n s f o r m a t i o n is retrieved. The text so computed or                                        generality), it is important to the understanding of the
+ in f a c t off:
+                       retrieved is then printed out.                                                                           operation of E L I Z A to describe them in some detail.
+tint.     Whai
+                            In detail, of course, the procedure sketched above is                                                   Consider the sentence " I ant very unhappy these days".
+e a d messy;:
+                       considerably more complex. Keywords, for example, a m y                                                  Suppose a foreigner with only a limited knowledge of
+"riting 01i
+                       h a v e a R A X K or precedence number. The procedure is                                                  English but with a veer good ear heard that sentence
+      compute
+                       sensitive to such numbers in that it will abandon a key-                                                 spoken but understood only the first two words " I am".
+ t s resp0i~
+                       word a.lready found in the left-to-right scan of the text in                                             Wishing to appear interested, perhaps even sympathetic,
+a l o g u e and:
+                       fxvor of one having a higher rank. Also, the procedure                                                   he may reply "How long have you been very unhappy
+~ b e r of us
+                       reeo~,afizes a comma or a period as a delimiter. Whenever                                                these days?" What he nmst have done is to apply a kind
+  T h e s e [~i~
+                       either one is encountered and a keyword has already been                                                 of template to the original sentence, one part of which
+o t h e 0vei
+                       found, all snbsequent text is deleted from the input mes-                                                matched the two words " I aln" and the remainder isolated
+i o n with
+                       sage. If no key had yet been found the phrase or sentence                                                the words "very unhat)py these days". He must also have
+.e delays.
+                       to the left• of the delimiter (as well as the delimiter itself)                                          a reassembly kit specifically associated with that template,
+u s e r types
+                       is deleted. As a result•, only single phrases or sentences are                                           one that specifies that any sentence of the form "I am
+u r a l lunge
+                       ever transformed.                                                                                        B L A H " can be transformed to " H o w long have you been
+a e t u r e s . 6t
+                             I£eywords and their associated transformation t rules                                              BLAH", independently of the meaning of BLAH. A
+se it, is b:.:
+                       constitute the S C R I P T for a particular class of con-                                                somewhat more complicated example is given by the
+) svstera. ~
+                       versation. An important property of E L I Z A is that a                                                  sentence " I t seems that you hate me". Here the foreigner
+a.rriage ret~.
+                       script is data; i.e., it is not part of the program itself.                                              understands only the words " y o u " and " m e " ; i.e., he
+• ~ L I Z A i?:
+                       Hence, E L I Z A is not restricted to a particular set of                                                applies a template that decomposes the sentence into the
+.,ornle reset
+                       recognition patterns or responses, indeed not even to any                                                four parts:
+:h tho
+                       specific language. E L I Z A scripts exist (at, this writing) in                                               (1) It s e e m s t h a t      (2) you   (3) h a t e   (4) me
+                       Welsh attd Gernmn as well as in English.
+                   (        T h e fundamental technical problems with which E L I Z A                                           of which only the second and fourth parts are understood.
+                       m u s t be preoccupied are the following:                                                                The reassembly rule might then be "What makes you
+7              :            (1) T h e identification of the "most important" keyword                                            think I hate you"; i.e., it nfight throw away the first
+                                                                                                                                component, translate the two known words ("you" to
+RI~            :              T h e w o r d " t r a n s f o r m a t i o n " is u s e d in its generic s e n s e r a t h e r     " I " and "me" to "you") and tack on a stock phrase
+                       t h a n t h a t g i v e n it b y tia.rris a n d C h o m s k y in l i n g u i s t i c c o n t e x t s .   (What makes you think) to the front of the reconstruction.
+~o
+                       V(~lume 9 /Numher                   1 / January,           1966                                                                           Communications    of t h e A C M    37
+J tl tl u arv;[ I:
+A formal notation in which to represent the decomposition                             almost none of the words in any given sentence are repre.
+template is:                                                                          sented in the keyword dictionary. The other is that of
+                                                                                      "associating" both decomposit;ion and reassembly rules
+     (0 YOU 0 ME)
+                                                                                      with keyword~-;. The iirst is serious in that the determina-
+and the reassembly rule                                                               tion that a word is not in a dictionary m a y well require
+     (WHAT M A K E S YOU T H I N K I 3 YOU).                                          more computation (i.e., time) than the location of a word
+                                                                                      which is represented. The attack on both problems begins
+The "0" in the decomposition rule stands for "an in-                                  by placing both a keyword trod its associated rules on a
+definite number of words" (analogous to the indefinite                                list. The basic format of a typical key list is the following:
+dollar sign of COMIT) [6] while the "3" in the reassembly
+rule indicates that the third component of the subject                                          (K ((D0 (R~. t) (R~, 2) "'" (Rt . . . . ))
+decomposition is to be inserted in its place. The decom-                                           ((D2) (R2. ~) (R2.2) " " (R2.,,,~))
+                                                                                                       :
+position rule
+                                                                                                     ((D,~) (R,,, ~) (taw, ~) ... (R,~, .~)))
+     (0 YOU 1 ME)
+                                                                                      where K is the keyword, D, the it,h decomposition rule
+would have worked just as well in this specific example. A
+                                                                                      associated with K and R¢, ~ the j t h reassembly rule ass0.
+nonzero integer " n " appearing in a decomposition rule
+                                                                                      ciated with the ith decomposition rule.
+indicates that the component in question should consist
+                                                                                         A common pictorial representation of such a structure
+of exactly " n " words. However, of the two rules shown,
+                                                                                      is the tree diagram shown in Figure 1. The top level of
+only the first would have matched the sentence, " I t seems
+                                                                                      this structure contains the keyword followed by the names
+you hate and love me," the second failing because there is
+                                                                                      of lists; each one of which is again a list structure beginning
+more than one word between " y o u " and "me".
+                                                                                      with a decomposition rule and followed by reassembly
+                                                                                      rules. Since list structures of this type have no predeter-
+                                                                                      mined dimensionality limitations, any number of decom-
+                                                                                      position rules m a y be associated with a given keyword and
+                                                                                      any number of reassembly rules witch any specific decom-
+                                                                                      position rule. SLiP i8 rich in functions that sequence over
+                                                                                      structures of this type efficiently. Hence programmin
+                                                                                      problems are minimized.
+        ~1 RI,1 R1,2"'" Rl,ml      D2 R2J RZ,Z" " "Rz,m2   De Ra,t FIn'2~'" " R%nan
+                                                                                         An ELIZA script consists mainly of a set of list struc-
+              Fro. 1.           :Keyword and rule list structure                      tures of the type shown. The actual keyword dictionary is
+                                                                                      constructed when such a script is first read into the
+   i n ELIZA the question of which decomposition rules to                             hitherto empty program. The basic structural component
+apply to an input text is of course a crucial one. The input                          of the keyword dictionary is a vector K E Y of (currently)
+sentence might have been, for example, " I t seems that                               128 contiguous computer words. As a particular key list
+you hate," in which ease the decomposition rule (0 YOU                                structure is read the keyword K at its top is randomized
+0 ME) would have failed in that the word " M E " would                                (hashed) by a procedure that produces (currently) a 7
+not have been found at all, let alone in its assigned place.                          bit integer "i". The word "always", for example, yields
+Some other decomposition rule would then have to be                                   the integer 14. KEY(i), i.e., the ith word of the vector
+tried and, failing that, still another until a match could                            KEY, is then examined to determine whether it contains
+be made or a total failure reported. ELIZA must therefm~                              a list. name. If it does not, then an empty list is created,
+have a mechanism to sharply delimit the set of decom-                                 its name placed in KEY(i), and the key list structure in
+position rules which are potentially applicable to a cur-                             question placed on that list. If KEY(i) already contains a
+rently active input sentence. This is the keyword mecha-                              list name, then the name of the key list structure is placed
+nism.                                                                                 on the bottom of the list named in KEY(i). The largest
+   An input sentence is scanned from left to right. Each                              dictionary so far attempted contains about 50 keywords.
+word is looked up in a dictionary of keywords. If a word                              No list named in any of the words of the K E Y vector
+is identified as a keyword, then (apart from the issue of                             contains more than two key list structures.
+precedence of keywords) only decomposition rules con-                                    Every word encountered in the scan of an input text,
+taining that keyword need to be tried. The trial sequence                             i.e., during the actual operations of ELIZA, is randomized
+can even be partially ordered. For example, the decom-                                by the same hashing algorithm as was originally applied to
+position rule (0 YOU 0) associated with the keyword                                   the incoming keywords, hence yields an integer which
+"YOU" (and decomposing an input sentence into (1) all                                 points to the only possible list structure which could
+words in front of "YOU", (2) the word "YOU", and (3)                                  potentially contain that word as a keyword. Even then,
+all words following "YOU") should be the last, one tried                              only the tops of any key list structures that m a y be found
+since it is bound to succeed.                                                         there need be interrogated to determine whether or not a
+   Two problems now arise. One stems from the fact t h a t                            keyword has been found. By virtue of the various list
+
+38      Communications of tile ACM                                                                           Volume 9 / Number 1 / January, 1966
+                  i       :
+
+
+    e repre-
+     t h a t of                ....
+                               ~,         . . . . ~. .,~, operations_ that SLIP makes available, the
+                                 -.~,~,~.ciT~o.                                                        new word is higher than t h a t of any previously encoun-
+     y rule~                   a,:ttta] identification of a keyword leaves as its i)rim:ipal           tered word, the pointer t o tile transformation rules
+    arn~inw                    product a pointer to the list of decomposition (and hence               associated with the new w o r d is placed on top of a list
+     require                   rc:t~se~bly) rules associated with the identified keyword.              called the keystack, o t h e r w i s e it is placed on the bottom
+          word                 ()~e resui~ of this strategy is that often less time is required        of the keystaek. Wizen t h e t e x t scan terminates, the key-
+    ; begim                    to discover that a given word is >_of in the keyword dic-               stack has at its top a p o i n t e r associated with the highest
+    es    Oil
+                               ~io~ary than to locate it if it. is there. However, tile location       ranked keyword e n c o u n t e r e d in the scan. The remaining
+    lowing:                    of a keyword yields pointers to all inforntation associated             pointers in the stack m a y n o t be monotonically ordered
+                               with that word.                                                         with respect to the ranks o f the words from which they
+                                    Some conversational protocols require that certain                 were derived, but they are n e a r l y so--in any event they
+                               transformations be made on certain words of .the input text             are in a useful attd i n t e r e s t i n g order. Figure 2 is a simpli-
+                              iiidependel~tly of any contextual considerations. The first
+                                                                                                              ,
+                               conversation displayed in this paper, for example, requires             ~              ke'/steck                  ~                J
+
+    on rule                   that firsb person pronouns be exchanged for second person
+                              pronouns and vice versa throughout tile input text. There                               '       *   !       :
+    le asso;                                                                                                  '   '
+
+                                                                                                            -~ ...... ~.._i                   k..!i_IH~[_/~--
+                                                                                                                                                                YES
+
+
+                              may be further transformations but these minimal sub-
+                              stitutions are unconditional. Simple substitution rules                                                                                                    _     t
+    rueLure
+                              ought not to be elevated to the level of transformations,
+    [ e v e l Of
+                              nor should the words involved be forced to carry with them
+                              all the structure required for the fully complex case.
+    ginning
+                              ],'urthermore, unconditional substitutions of single words
+    .seInbly                                                                                                                                         YgS
+                              for single words can be accomplished during the text scan
+    "edeter::
+                              itself, not as a Lransformat.ion of the entire text subsequent
+    decon>
+                              to scanning. To facilitate the realization of these
+ )rd &nd
+                              desiderata, any word in the key dictionary, i.e., at the
+ deoom:                                                                                                      t ~' ~c___F-]:;,:~:o~                          1
+                              top of a key fist, structure., may be followed by an equM
+ oe.     over
+                              sign followed by whatever word is to be its substitute.
+    1TI YV~ irt       :
+                              Tranformation rules may, but need not, follow. If none                          FIG. 2. Basic flow diagram of keyword detect.ion
+                              do follow such a subst, itution rule, then the substitution is           fled flow diagram of k e y w o r d detection. The rank of a
+:: st:t?ue-:
+                              made on the fly, i.e:, during text scanning, but the word                keyword must, of course, a!so be associated with the
+, n a r y is
+                              in question is not identified as a keyword for subsequent                keyword. Therefore it m u s t appear on the keyword list
+~to t h e
+                              purposes. Of course, a word may be both subtituted for                   structure. It may be f o u n d , if at all, just in front of the
+ portent :
+rently)                       and be a keyword as well. An example of a simple sub-                    list of transformation r u l e s associated with the keyword.
+                              stitution is                                                             As an example consider t h e word " M Y " in a particular
+~ey list
+onfized                                                                                                script. Its keyword list m a y be as follows:
+                                                   (YOUIISELF = MYSELF).
+Y) a 7                                                                                                     (MY -- YOUR. 5 (transformation rules)).
+   5~ields                     Neither "yourself" nor "myself" are keywords in the
+                               particular script from which this example was chosen.                   Such a list would mean t h a t whenever the word " M Y " is
+ veer.tot
+                                 The fact that keywords can have ranks or precedences                  encountered in any text, it would be replaced by the word
+)ntains
+                               has already been mentioned. The need of a ranking mecha-                "YOUR". Its rank would b e 5.
+reated,}i
+                               nism may be established by an example. Suppose an input                    Upon completion of a g i v e n text scan, the keystack is
+                               sentence is " I know everybody laughed at me." A script                 either empty or contains pointers derived from the key-
+t ains       a:
+                              may tag the word "I" as well as the word "cvetTbody"                     words found in the text. E a c h of such pointers is actually a
+ ola~eed:
+                               as a keyword. Without differential ranking, " I " occurring             sequence reader--a SLip mechanism which facilitates
+l~trg-est i
+                              first would determine the transformation to be applied.                  scanning of lists--pointing into its particular key list in
+xx-ol-ds.i
+                              A typical response might be "You say you know everybody                  such a way that one s e q u e n c i n g operation to the right
+ \-"e e t o g
+                               laughed at. you." But. the important message in the input               (SEQLR) will sequence it t o the first set of transformation
+                              sentence begins with the word "everybody". It is very                    rules associated with its k e y w o r d , i.e., to the list
+t   text,
+  1hi zed                     often true that when a person speaks in terms of universals                                             ((Dr) (Rt,,) (R,,e) ... (R~,R,.~)).
+)liecI to                     such as "everybody", "always" and "nobody" he is really
+                              referring to some quite specific event or person. By giving              The top of that list, of course, is a list which serves a
+ ~vhieln                                                                                               decomposition rule for t h e subject text. The top of the
+   eoutld :                   "'everybody" a higher rank than "I", the response "Who
+                                                                                                       keystack contains the first, pointer to be activated.
+l then      :::               in particular are you thinking of" may be generated.
+                                 The specific mechanism employed in ranking is that the                  The decomposition r u l e D~ associated with the keyword
+ fol_t ha{                                                                                             K, i.e., {(D0, K}, is n o w tried. It may fail however. For
+  not     a                   rank of every keyword encountered (absence of rank
+                                                                                                       example, suppose the i n p u t t e x t was:
+                              implies rank equals 0) is compared with the rank of the
+us    list
+                              highest, ranked keyword already seen. If the rank of the                                                    You are very helpful.
+Y,       1966:
+                              V o l u m e 9 / N u m b e r 1 / .]anuary, 1966                                                                    C o n a r n u n i c a t i o n s of t h e ACM       39
+                      :i}
+       Tile lwywor<t, say, is "'you", and I cD,), you} is                   thtG decomposition rule. Tl, Js mechanism h~st,res t h a t the
+                                                                            complete set of reassernbly rules ~ssoeiated with a given
+                                 (0 I remind you of 0;.
+                                                                            deeomposh:ion rule is cycled through before any repetitions
+       (l-h:call that the " y o u " it, the original sentence has already   0CCUY,
+       b(:(n replaced I%" " I " in the text now analyzed.) This                The system described so far is ess(qltially one which
+       det:omposilicq~ rule obviously fails to match tile input             selects ~t decomposition rule for the highest ranking key-
+       sentence. Should i(D0, K} fail to find a match, then                 word found in an input text, attempts to m a t c h t h a t text
+       I(D2), K} is tried. Should that too fail, {(Da), K} is               according to that decomposition rule and, failing to make
+       atlempted, and so (m. Of course, lhe set of transformation           a match, selects the next reassembly rule associated with
+       rules can be guaranteed to terminate with a decomposition            the matching decomposition rule and applies it. to generate
+       rule which nmst match. The decomposition rule                        an output texi. It is, in other words, a system which, for
+                                        (o K o)
+                                                                            the highest ranking keyword of a text, selecta a speeifie
+                                                                            decomposition and reassembly rule to be used ill forming
+       will m a t c h any text in which tile word K appears while           the output message.
+                                                                               Were the system to remain that simple, then keywords
+                                          (0)
+                                                                            that required identical sets of transformation rules would
+       will match any text whaiever. However, there are other               each require that a copy of these transformation rules be
+       ways to leave a particular set of transformation rules, as           associated with them. This woukl be logically sound but
+       will be shown below. For the present, suppose that some              would complicate the task of script writing and would also
+       particular decomposition rule (D,') has lnatehed the input           make unnecessary storage demands. There are therefore
+       text. (D~), of course, was found o n a list of the form              special types of decomposition and assembly rules char-
+                                                                            aeterized by the appearance of . . . . . at the top of the
+                       ((DO(R:, ~)(& ~) --- (R,-..... )).
+                                                                            rule list. The word following the equal sign indicates which
+       Sequencing the reader which is presently pointing at                 new set of transformation rules is to be applied. ]"or ex-
+       (D,) will retrieve the reassembly rule (R,. ~) which m a y           ample, the keyword " w h a t " m a y have associated with it
+       then be applied to the decomposed input text to yield the            a transformation rule set of the form
+       output message.
+                                                                                 ((0) (Why do you ask) (Is that an important, question) . . .)
+         Consider again the input text
+           You are very helpful                                             which would apply equally well to the keywords "how"
+.:..                                                                        and "when". The entire keyword list for " h o w " may
+       in which "you" is the only key word. The sentence is                 therefore be
+       transformed during scanning to
+                                                                                 (How (=What))
+           [ are very hell)ful
+                                                                            The keywords "how", " w h a t " and "when" m a y thus be
+        (Dr), you} is "(0 i remind your of 0)" and fails to match           made to form an equivalence class with respect to the
+       as already discussed. However, I (De), you} is "(0 I are 0)"         transformation rules which are to apply to them.
+       and obviously ma.tehes the text, decomposing it into the                In the above example the rule " ( = w h a t , ) " is in the
+       coltstituents                                                        place of a decomposition rule, although it causes no
+              d) empty       (2) I       .,.3) are      6l) very helpful.   decomposition of tile relevant text. I t m a y also appear,
+                                                                            however, in the place of a reassembly rule. l.'or example,
+       {(Re. I), you} is                                                    the keyword "am" m a y have mnong others the following
+           (What makes you think I am 4)                                    transformation rule set associated with it:
+
+       Hence it produces the output text                                         ((0 are you 0) d)o you believe you are 4) . . . ( = w h a t )   . . .)
+                                                                                                                                                          {
+          wtm~ makes you think I am very helpful.                           (it is here assumed that " a r e " has been substituted for
+                                                                            " a m " and "you" for "I" in the initial text seam) Then,
+   H a v i n g produced it, the integer 1 is put in front of (Re. t)        the input text
+   so that the i ransfonnation rule list in question now appears
+   as                                                                            Am I siek
+
+                      ((D~)I(Re,~)(R2,~) . . .         ( R e ..... ) ) .    would elicit either
+
+   Next time ~(De), K} matches an input text, the reassembly                     ])o you believe you are siek
+   rule (R2..2) will be applied and the integer 2 will replace              or
+   the 1. After (R2. ,~,) has been exercised, (Re. ,) will again
+                                                                                 W h y do yotl a s k                                                      i
+   be invoked. Thus, after the system has been in use for a
+   time, ex'ery decomposition rule which has matched some                   depending on how many tinles the general form had
+   input text has associated with it an integer which corre-                already occurred.
+   sponds to the last l~assembly rule used in connection with                  Under still other conditions it m a y be desirable to
+
+   40          Connnunications        o f tile AkC~I                                                   Volume   9 / Number     1 / January,      1966
+           <~--~
+
+
+mt tb
+                     :i<<[o:~'iY~ ,::~ p r e l i m i n a r y transformciiiou On tile h t p u t                      <exb     f r o m the ordinary one in some respects. An example
+; give~                                                                                                                      ilIuminat:es this point.
+                     [ ,, : L,.)i'o ~ u } ) i e c ' { i n o "                  ~ o : ~ s "" "
+                                                                i,'..to 1 h e de,.:onuDosP,     : r o d reti-4senttc"/iles
+'titi0r~z
+                     -<.~ <> ~L m , v y[eid t h e ou[t)ut .:ext. ~¢or e x a m p l e , t h e                                       Consider tile following structure:
+                     ~-,v,:{or / " v o u h - e " s h o u l d b a d to the t r a n s f o r m a t i o n r u l e s                   (MEMORY MY
+ which
+                     ~t..... ,.iat,-d with "you" t,)ttt S}tOltld {;;'At })e replaced by a                                           (0 Y O U R 0 = LETS DISCUSS F U R T H E R WHY YOUR 3)
+                     ,,. ~)r,:[ Imir. The dieticmarv e:ttry £~u" "3-ou'rC' is therefore:                                            (0 Y O U R 0 - EARLIER YOU SAID YOUR 3)
+~ texi
+ make                           yo~re = i:m ((0 I'm O) (P1~I; (I _k).[ 3) (:=YOU.)})
+                                                                                                                                  T h e word " M Y " (which must be an ordinary keyword
+:t with             ,.~ hic.h has the foiiowit~e~ effect:
+                                                                                                                             as well) has been selected to serve a special function.
+tlerate                                                        ~ in the input text.., i~ is
+                           l'). -Wherever :'3:ou']'e" is _out~u~'
+                                                                                                                             W h e n e v e r it is the highest ranking keyword of a text one
+% for               r~q,h eed bv I m .
+                                                                                                                             of the transformations on the M E M O R Y list is randomly
+pecific                   t-/       ..ou.re is actually selected as ihe ream%hi,
+                                                                                                                             selected, a n d a copy of the text is transformed accordingly.
+rming               i<eyword, then the input text: is decomposed late three
+                                                                                                                             T h i s transformation is stored on a first-in-first-out stack
+                    e{u:stiluent parts, namely, all text in h'out of the first
+                                                                                                                             for later use. The ordinary processes already described are
+words               oecurre>.ce of " I ' m " , the word " I ' m " itself, and all text
+                                                                                                                             t h e n carried out. When a text without keywords is en-
+vould               followi~lg tile first occurrc:we of " I ' m " .
+                                                                                                                             countered later and a certain counting mechanism is in a
+tes b~:                  (3) The reassembly rule beginning with ih(' eode
+                                                                                                                             particular state and the stack in question is not empty,
+:l but              ' g ? R I 5 " is eneountered at!d the decomposed texk: re-
+                                                                                                                             then the transformed text is printed out as the reply• I t
+t als0              assembled such that the words ' I A-Xl" appear in front
+                                                                                                                             is, of course, also deleted from the stack of such trans-
+"ef0re              of the third constituent, determined by the earlier de-
+                                                                                                                             formations.
+char.               compositiou.
+                                                                                                                                 T h e eurrent version of E L I Z A requires that one keyword
+f the;                   (4) Contxol is transferred, so to speak, to the trans-
+                                                                                                                             be associated with M E M O R Y and that exactly four
+~hieh               f o r m m i o n rules associated with the keyword " y o u " ,
+                                                                                                                             transformations aceoinpany that word in that context. (An
+r eli               where, further decompositions etc. are attempted.
+                                                                                                                             application of a transformation rule of the form
+t.h it,                  It, is to be noted that the set
+           :                                                                                                                      ( L E F T H A N D SIDE = t l I G I I T H A N D SIDE)
+                              ,'P {Ill (I AM 3) (=YOU))
+                                                                                                                             is equivalent to the successive application of the two forms
+ •   .,)            i~ logically in the place of a reassembly rule attd m a y
+                    therefore be one of really r e a s s e m b l y rules associated with                                          ( L E F T H A N D SIDE), (RIGIIT HAND SIDE).)
+OW"
+                    t h e given decomposition.                                                                                  T h r e e more details will complete the formal description
+may:
+                         Another form of reassembly rule is                                                                  of the E L I Z A program.
+                              (NEWKI::Y)                                                                                        T h e transformation rule mechanism of SLIP is such that.
+                                                                                                                             it permits tagging of words in a text and their subsequent
+                    v..,deh serves the eas{~ in which attempts to nmtch o n the                                              recovery on the basis of one of their tags. The keyword
+s be                (:urcently regnant keyword are to be given up and the                                                    " M O T H E R ? ' in ELIZA, for example, m a y be identified
+ the                end.ire decomposition a~d reassembly process is to s t a r t                                             as a noun and as a member of the class "family" as follows:
+                    a ~ a h t on the basis of the keyword to be found in the
+the                 keystack. Whenever this rule is invoked, the top of ttle                                                      (MOTHER           DLIST   (/NOUN FAMILY)).
+     no             k('ysta('k is "popped Ul)" once, i.e., the new regnant key-                                              Such tagging in no way interferes with other information
+ear, :              w o r d recovered and removed from the keystack, att(.l the                                               (e.g., r a n k or transformation rules) which may be asso-
+ple,                e n t i r e process reinitiated as if the initial text scan had jusla                                    d a t e d with the given tag word. A decomposition rule nmy
+ing :               termirmted. This mechanism makes it possible to, in effect,                                              contain a matching constituent of the form ( / T A G I
+                    test on key phrases as opposed to single key words.                                                      T A G 2 . - - ) w h i c h will match and isolate a word in the
+ •   .)                   A serious problem whieh remains to be discussed is the                                             subject t e x t having any one of the mentioned tags. If, for
+                    reaction of the system in ease no keywords renmin to                                                     example, " M O T H E R " is tagged as indicated and the
+for                 s e r v e as transformation triggers. This can arise either in                                           i n p u t text
+                    cas:, the ke3"stack is emI)ty when N E W K E Y is invoked or
+                                                                                                                                 " C O N S I D E R 5IY AGED M O T t I E R AS WELL AS M E "
+                    w h e u the input text. contained no keywords initially•
+                          T h e simplest meelmnism supplied is in the form of the                                            subjected to the decomposition rule
+                    special reserved keyword " N O N E " which must be part of                                                   (0 YOUR, 0 (/FAMILY) 0)
+                    n n y script. The script writer must assoeiate the universally
+                    m a t c h i n g deeomposition rule (0) with it and follow this b y                                       (remembering that " M Y " has been replaced by " Y O U R " ) ,
+                    as m a n y content-h'ee remarks in the form of transforma-                                               t h e n the decomposition would be
+                    t i e d rules as he pleases. (Exmnples are: "Please go on",                                               (1) C O N S I D E R      (2) YOUR      (3) AGED       (4) M O T H E R
+                                                                                                                                                      (5) AS W E L L AS ME.
+                        r h a r s very interesting" and " I see".)
+                          T h e r e is, however, another mechanism which causes the                                             A n o t h e r flexibility inherent in the SLiP text manipula-
+                    s y s t e m to respond more spectacularly in the absence of a                                            tion mechanism underlying E L I Z A is tha or-ing of
+                    key. The word " M E M O R Y " is another reserved pseudo-                                                m a t c h i n g criteria is permitted in decomposition rules•
+to :;               keyword. The k e y list structure associated with it differs                                             T h e above input text would have been decomposed
+
+                   • "Volume 9 / N u m b e r 1 / J a n u a r y , 1966                                                                                   Communications      o f t h e ACM        41
+          :i
+    :t
+
+
+           precisely as stated above by the decomposition rule:                     i> <i!:,.tk -erves tile spea]<er to n m rain his sense o~ btqng
+                                                                                    !      J
+                                                                                     :-:~::rc:a,qd understood. T h e ~peak,,~r further d<,:fe::d~his
+                (0 YOUR 0 (.FATHEII MOTIIEII) 0)
+                                                                                    hnpression (which
+                                                                                                   ,                                   '
+                                                                                                           even h: real Ere m a y be lhn~o   F \) ) by
+                                                                                      .~ .i   .                                        t
+               which, by virtue of the presence of " , " in the sublis¢             ac:iuoutmg to his conversationa: l?ar{n()rah sorts of back-
+               struc.ture seen above, would have isolated either the word           ground kno w!edge, insigl:t s and l'easo~dn o.cabilit 3: But ::radii,
+               " F A T I t E R " or " M O T H E R " (in that order) in the input.   t.hese are the .~pegl,e,'a contribution to the conversation.
+               text, whichever occurred first after the first appearance of         Thev. manifest then:selves hfferentialh-., in the _~~:te.@ce{a.h m .~°
+               the word " Y O U R " .                                               he makes of d-to offered responses, -"t rein the purely tec~: ncal
+                                                                                                                                   l       ~   •   i   ]   •
+
+
+
+
+                   Finally, the script writer nmst begin his script with a           programming poiLU of view then, the t?sychbJ:ric i n t e r v i e w
+               list, i.e., a message enclosed in parentheses, which contains         form of an I';LIZA script has the advantage that it elimi-
+                the statement he wishes EI.IZA to type when the system               nates the need of storing e.~:pUcit inform:tth?n about the
+                is first loaded. This list nmy be empty.                             real world.
+                   Editing of an E L I Z A script is achieved via appeal to a           The human speaker will, a~ has been said, contribute
+                contextual editing program (ED) which is part of the                 much to clothe EI,IZA'S responses h: vestmen:s of
+                MAC library. This program is called whenever the input              plausibility. B u t he will not defend his illusion (that he is
+                text to E L I Z A consists of the single word " E D I T " .          being understood) against all odds. In tmnutn eonversat:on
+                E H Z A then puts itself in a so-called dormant state and            a speaker will make certain (perhaps generous) assmnl)-
+                presents the then stored script for editing. Detailed               lions about his conversational partner. As long as ~ it
+                d:-scriptio:t of E D is out of place here. Suftice it to say that    remains possible to interpret the latter's response~ con-
+                changes, additions and deletions of the script m a y be made        sistently with those assumptions, the speaker's image of
+                with considerable efficiency and on the basis of entirely           his partner remains unchanged, in particular, undanmged.
+                contextual cues, i.e., without resort to line numbers or            Responses wlfieh are difficult to so interpret m a y well
+                any other artificial devices. When editing is completed,            result in an enhancement of the inmge of the partner, in
+    : :::4ffs" E D is given the command to F I L E the revised script. The           additional rationalizations which then make more con>
+                new script is then stored on the disk and read into ELIZA.          plicated interpretations of his responses reasonable.
+                E L I Z A lhen types the word " S T A R T " to signal that the      When, however, such rationalizations become too inassive
+                conversation m a y resume under control of the new script.          and even self-contradictory, the entire image m a y erumble
+                   An important consequence of the editing facility built           and be replaeed by another ("He is not, after all, as s m a r t
+               into E L I Z A is that a given E L I Z A script need not start       as I thought he was"). When the conversational pa.rtner
+               out to be a large, full-blown scenario. On the contrary, it          is a machine (the distinction between nmchine and prograin
+               should begin as a quite modest set of keywords and                   is here not useful) then the idea of credibility m a y weU b e
+               transformation rules and permitted to be grown and                   substituted for that. of pla.'uaibiStfl in the above.
+               molded as experience with it builds up. This appears to                 With E L I Z A as the basic vehicle, experiments m a y b e
+               be the best. way to use a truly, interactive man-machine             set up in which the subjects find it credible to believe t h a t
+               facility--i.e., not as a device for rapidly debugging a code         the responses which appear on his typewriter are gener-
+               representing a fully thought out solution to a problem, but          ated by a h u m a n sitting at a similar instrmnent in a n o t h e r
+     S         rather as an aid for the exploration of problem solving              room. How must the script be written in order to m a i n t a i n
+           strategies.                                                              the credibility of this idea over a long period of time?
+                                                                                    H o w can the performance of E L I Z A be systematically
+           Discussion                                                               degraded in order to achieve controlled and predictable
+              At this writing, the only serious E L I Z A scripts whieh             thresholds of credibility in the subject? What, in all this,
+           exist are seine which cause E L I Z A to respond roughly as              is the role of the initial instruction to the subject? On t h e
+           would certain psychotherapists (Rogerians). E L I Z A                    other hand, suppose the subject is told he is communicating
+           performs best when its human correspondent is ilfitially                 with a maehine. W h a t is he led to believe about t h e
+           instructed to "taJk" to it, via the typewriter of course,                machine as a result of his conversational experience w i t h
+           just as one would to a psychiatrist. This mode of ton-                   it? Seine subjects'have been very hm'd to convince t h a t
+           versation was chosen because the psychiatric interview                   E L I Z A (with its present script) is not hunmn. This is a
+           is one of the few examples of categorized dyadic natural                 striking form of Turing's test. W h a t experimental design
+           language comnmnieation in which one of the participating                 would make it more nearly rigorous and airtight?
+           pair is free to assume the pose of knowing almost nothing                   The whole issue of the credibility (to humans) of
+           of the real world. If, for exalnple, one were to tell a psv-             machine output demands investigation. I m p o r t a n t de-
+            ehiatrist " I went for a long boat ride" and he responded               cisions increasingly tend to be made in response to c o m -
+            "Tell me about boats", one would not assume that he knew                puter output. The u h i m a t e l y responsible h u m a n inter-
+           nothing about boats, but that he had some purpose in so                  preter of " W h a t the machine says" is, not unlike t h e
+           direeting the subsequent conversation. I t is important to               correspondent with E H Z A , constantly faced with t h e
+           note that this assumption is one made by the speaker.                    need to make credibility judgments. E L I Z A shows, if
+           Whether it is realistic or not is art altogether separate                nothing else, how easy it is to create and nmiutain t h e
+           question. In any case, it has a crucial psychological utility            illusion of understanding, hence perhaps of j u d g m e n t
+
+           42       Communications of the ACM                                                               Vohunc 9 / Number 1 / January, 1966
+J
+{
+         tg
+                      de.-erving of eredibilRy. A certain d:u~ge1 lurks there.         make the tentative inference that he is either a widower
+         is
+                         ~.~: idea ihat the presettt E L I Z A s{:rk)t contains no     or divorced. Of course, he could simply be confused. In
+        ,y
+                      infocmation about tl~e real world i:s ,tot. e~tirely true. For   /:he long run, E L I Z A should be able to build up a belief
+        C-
+                      e>:ample, the tran>formation rules which cause ihc input         structure (to use Abelson's phrase) of the subject and on
+        [I:
+                                                                                       that basis detect the subject's rationalizations, contra-
+                          Everybody hates me
+                                                                                       dictions, etc. Conversations with such an ELIZA would
+                      to be transformed to                                             often turn into arguments, hnportant steps in the realiza-
+                                                                                       tion of these goals have ah'cady been taken. Most notable
+        w                 Can you think of anyone in particular
+                                                                                       among these is Abelson's and Carroll's work on simulation
+        i-
+                      and other such are based on quite specific hypotheses about      of belief structures [1].
+        ~e
+                      the world. The whole script constitutes, in a loose way, a          The script that has formed the basis for most of this
+                      model of certain aspects of the world. The act of writing a      discussion happens to be one with an overwhehningly
+        [e
+                      script is a kind of programming act and has all the advan-       psychological orientation. The reason for this has already
+        )f
+                      tages of programming, most particularly that it clearly          been discussed. There is a danger, however, that the
+        is        :
+                      shows where the progranuner's understanding and con>             example will run away with what it is supposed to illus-
+                      mand of his subject leaves off.                                  t.rate. I t is useful to remember that the E L I Z A program
+                         A large part of whatever elegance may be credited to          itself is merely a translating processor in the technical
+        it        =
+                      ELIZA lies in the fact that E L I Z A maintains the illusion     programming sense. Gem [2] in a paper on language
+                      of understanding with so little machinery. But. there are        systems says:
+     )f
+                      bounds on the extendability of ELIZA's "understanding"           Given a language which already possesses semantic content, then
+     1.
+                      power, which arc a function of the ELIZA program itself          a translating processor, even if it operates only syntactically,
+     .11                                                                               generates correspondittg expressions of another language to which
+                      and not a function of any script it may be given. The
+                                                                                       we can attritmte as "meanings" (possibly multiple--the translator
+                      crucial test of understanding, as every teacher should
+     l-                                                                                may not be one to one) the "semantic intents" of the generating
+                      know, is not the subject's ability to continue a conversa-       source expressions; whether we find the result consistent or useful.
+                      tion, but to draw valid conclusions h'om what. he is being       or both is, of course, another problem. It is quite possible that by
+                      told. In order for a computer program to be able to do           this method the same syntactic object language can be usefully
+    [e                                                                                 assigned multiple meanings for each expression...
+                      that, it must at least have the capacity to store 8elected
+    7t
+                      parts of its inputs. ELIZA throws away each of its inpuls,          It is striking to note how well his words/fit ELIZA. The
+                      except for those few transformed by means of the                 "given language" is English as is the "other language",
+                      :\IIiL\:IOI{Y machinery. Of course, the problem is more          expressions of which arc generated. In principle, the given
+                      than one of storage. A great part of it is, in fact, subsumed    hmguage could as well be the kind of English in which
+                      under the word "selected" used just, above. E L I Z A in its     "word problems" in algebr~L am given to high school
+                      use so far has had as one of its principal objectives the        students and the other language, a machine code allowing
+    Lt
+                      cot~cetdment of its lack of understanding. But to encourage      a particular computer to "solve" the stated problems.
+                      its conversational partner to offer inputs from which it          (See Bobrow's program S T U D E N T [3].)
+    ;r
+                      can select remedial information, it, must ret,eal its mis-          The intent of the above remarks is to further rob E L I Z A
+    n
+                      tmderstanding. A switch of objectives from the conceal-          of the aura of magic to which its application to psycho-
+                      meat to the revelation of misunderstanding is seen as a          logical subject matter has to some extent contributed.
+    y
+                      precondition to making an ELIZA-like program the basis           Seen in the coldest possible light, ELIZA is a translating
+                      for an effective natural language man machine com-               processor in Gorn's sense; however, it is one which has
+                      munication system.                                               been especially constructed to work well with natural
+                         One goal for an augmented ELIZA program is thus a             language text.
+                      system which already has access to a store of information
+                7     about some aspects of the real world and which, by means                                  REFERENCES
+h
+                      of conversational interaction with people, can reveal both
+                                                                                       1. ABEl.SON, Pt. P., AND CARROLL, J. D. Computer simulation
+                      what it knows, i.e., behave as an infh)rmation retrieval              of individual belief systems. Amer. Behav. Set. 9 (May 1965),
+gt
+                      system, and where its knowledge ends and needs to be                 24-30.
+t~t
+                      augmented. Hopefully the augmentation of its knowledge           2. Goax, S. Semiotic relationships in ambiguously stratified
+                      will also be a direct consequence of its conversational               bmguage systems. Paper presented at Int. Colloq. Algebraic
+,f                                                                                          Linguistics and Automatic Theory, Hebrew U. of Jerusalem,
+                      experience. I t is precisely the prospect that. such a program
+                                                                                            Aug. 1964.
+                      will converse with many people and learn something from          3. Bom¢ow, D . G . Natural language input for a computer prob-
+                      each of them, which leads to the hope that R will prove an            lem solving system. Doctoral thesis, Math. Dept., MIT.
+                      interesting and even useful conversational partner.                   Cambridge, Mass., 1964.
+                         One w~v to state a slightly different intermediate goal is    4. WEIZENB_~UM, J. Symmetric list processor. Comm. A C M 6,
+                                                                                            (Sept. 1963), 524-544.
+                      to say that E L I Z A should be given the power to slowly        5. ROGEaS, C. Client Centered Therapy: Current Practice, Impli-
+f
+                      build a model of the subject conversing with it. If the              cations and Theory. Houghton Mifflin, Boston, 1951.
+~3
+                      subject mentions that. he is not. married, for example, and      6. YNGVE, J. COMIT Programndng Manual. M[T Press, Cam-
+t             <
+                      later speaks of his wife, then ELIZA should be able to               bridge, Mass., 1961.
+
+G                     Volume 9 / Number 1 / January, 1966                                                      Communications      o f t h e ACM       43
+              :: ?
+                     APPENIOIX.                A~a. E L I Z A    Script          (WOU!D      YOU WANT TO BE ~)
+                                                                                 (WHAT WOULD IT MEAN IF YOU WERE ~)
+                                                                                                                               {YOU WISH I WCUL0 TELL YOU YOU ArE 4)
+                                                                                                                                             (=WHAT))
+                                                                                 ((0)     (WHY O0 YOU SAY ' A M ' )               (I   DON~T UNDERSTgNO T H A T ) ) )
+                                                                                 (ARE ( ( 0     ARE      I 0 )
+                                                                                 (WHY ARE YOU iNTERESTED                       IN WHETHFR I AM ~ OR NOT)
+ (HOW DO YOU 00.                PLEASETELL ME YOUR PROBLEM)
+ START                                                                           (WOULD YOU PREFER                 IF    ~ WEREN'T ~)       (PERHAPS i A~ ~ IN YOU~
+                                                                                 FANTASIES)          (DO YOU SOMETIMES THINK                 I AM ~)    (=W~AT))
+ (SORRY ( ( 0 )       (PLEASE DON'T A P O L I G I Z E )
+ (APOLOGIES ARE NOT NECESSARY) (WHAT FEELINGS                                    ( ( O ARE 0)        (DiD    YOU THINK THEY MIGHT NOT BE 3)
+                                                                                 (WOULD YOU LIKE              IT    IF THEY WERE NOT 3)           (WHAT !F THEY WPRE NOT 3>
+ DO YOU HAVE WHEN YOU APOLOGIZE)                  (lIVE   TOLD YOU
+ THAT APOLOGIES ARE NOT REQUIRED)))                                              (POSSIBLY         THEY ARE 3 ) )          )
+
+ (DONT = DON'T)                                                                  (YOUR = MY ( ( 0           MY O)       (WHY ARE YOU CONCERNED OVER MY 3)
+
+ (CANT = CAN'T)                                                                  (WHAT A B O U T      YOUR OWN 3) (ARE YOU W O R R I E D ABOUT SO~.!EONE ELSES 3)
+
+ (WONT = WON'T)                                                                  (REALLY, MY 3 ) ) )
+
+ (REMEMBER S                                                                     (WAS 2 ((0 WAS YOU 0 )
+                                                                                 (WHAT IF YOU WERE ~) (DO YOU THINK YOU WERE h)
+ ( ( 0 YOU REMEMBER O) (DO YOU OFTEN THINK OF 4)
+                                                                                 (WERE YOU k)           (WHAT WOULD IT MEAN IF YOU WERE ~)
+ (DOES THINKING OF ~ BRING ANYTHING ELSE TO MINO)
+                                                                                 (WHAT DOES '           4 ' SUGGEST TO YOU) (=WHAT))
+ (WHAT ELSE OO YOU REMEMBER)
+                                                                                 ((O YOU WAS O)
+ (WHY DO YOU REMEMBER 4 JUST NOW)
+                                                                                 (WERE YOU REALLY) (WHy DO YOU TELL ME YOU WERE ~ NOW)
+ (WHAT IN THE PRESENT SITUATION REMINDS YOU OF ~)
+                                                                                 (WERE YOU REALLY) (WHY DO YOU TELL ME YOU WERE ~ NOW)
+ (WHAT IS THE CONNECTION BETWEEN ME AND ~))
+                                                                                 (PERHAPS I ALREADY KNEW YOU WERE h) )
+ ((0 DO I REMEMBER 0) (DID YOU THINK I WOULD FORGET 5)
+                                                                                 ((O WAS I O) (WOULD YOU LIKE TO BELIEVE { WAS h)
+ (WHY DO YOU THINK I SHOULD RECALL S NOW)
+                                                                                 (WHAT SUGGESTS THAT I WAS ~)
+ (WHAT ABOUT 5) (=WHAT) (YOU MENTIONED S))
+                                                                                 (WHAT DO YOU THINK) (PERHAPS I WAS q)
+ ((0)     (NEWKEY)))
+                                                                                 (WHAT IF I HAD BEEN ~))
+ (IF 3 ( ( 0       IF 0) (DO YOU THINK ITS LIKELY THAT 3) (DO YOU WISH THAT 3)
+                                                                                 ((0)     (NEWKEY)))
+ (WHAT DO YOU THINK ABOUT 3) (REALLY, 2 3)))
+                                                                                 (WERE = WAS (=WAS))
+ (WHAT DO YOU THINK ABOUT ~) (REALLY, 2 3)))
+                                                                                 (ME = YOU)
+ (DREAMT ~ ((0 YOU DREAMT O)
+                                                                                 (YOU'RE = I ' M ((0 I'M 0) (PRE ( I ARE S) (=YOU))))
+ (REALLY, ~) (HAVE YOU EVER FANTASIED ~ WWILE YOU WERE AWAKE)
+                                                                                 ( I ' M = YOU'RE ((0 YOU'RE O) (PRE (YOU ARE 3) ( = I ) ) ) )
+ (HAVE YOU DREAMT ~ BEFORE) (=DREAM) (NEWKFY)))
+                                                                                 (MYSELF = YOURSELF)
+ (DREAMED = DREAMT ~ (=DREAMT))
+                                                                                 (YOURSELF = MYSELF)
+ (DREAM 3 ((0)             (WHAT DOES THAT DREAM SUODEST TO YOU)
+                                                                                 (MOTHER OLIST(/NOUN FAMILY))
+ (OO YOU DREAM OFTEN) (WHAT PERSONS APPEAR IN YOUR DREAMS)
+                                                                                 (NON = MOTHER DLIST(/ FAMILY))
+ (DON'T YOU BELIEVE THAT DREAM HAS SOMETHINC TO ~0 WITH
+                                                                                 (DAD = FATHER DLIST(/ FAMILY))
+ YOUR PROBLEM) (NEWKEY)))
+                                                                                 (FATHER DLIST(/NOUN FAMILY))
+ (DREAMS = DREAM 3 (=DREAM))
+                                                                                 (SISTER BLIST(/FAMILY))
+ (HOW (=WHAT))
+ (WHEN (=WHAT))                                                                  (BROTHER DLIST(/FAMILY))
+                                                                                 (WIFE D L I S T ( / F A M I L Y ) )
+ (ALIKE 10 (=DIT))
+ (SAME 10 (=DIT))                                                                (CHILDREN O L I S T ( / F A M I L Y ) )
+
+ (CERTAINLY (=YES))                                                              (I     = YOU
+                                                                                 ((0 YOU ( * WANT NEED) O) (WHAT WOULD IT MEAN TO YOU IF YOU GOT ~)
+ (FEEL DLIST(/BELIEF))
+                                                                                 (WHY DO YOU WANT 4) (SUPPOSE YOU GOT ~ SOON) (WHAT
+ (THINK DLIST(/BELIEF))
+                                                                                 IF YOU NEVER GOT ~) (WHAT WOULD GETTING ~ MEAN TO
+ (BELIEVE DLIST(/BELIEF))
+ (WISH DLIST(/BELIEF))                                                           YOU) (WHAT DOES WANTING ~ HAVE TO DO WITH THIS DISCUSSION))
+                                                                                 ((0 YOU ARE O (-SAD UNHAPPY DEPRESSED SICK ) 0)
+ (MEMORY MY (0 YOUR 0 = LETS DISCUSS FURTHER WHY YOUR 3)
+                                                                                 (I     AM SORRY TO HEAR YOU ARE 5) (DO YOU THINK COMING HERE
+ (0 YOUR 0 = EARLIER YOU SAID YOUR 3)
+                                                                                 WILL HELP YOU NOT TO BE 5) ( I ' M SURE ITS NOT PLEASANT TO
+ (O YOUR 0 = BUT YOUR 3)
+                                                                                 BE 5) (CAN YOU EXPLAIN WHAT MADE YOU 5))
+ (0 YOUR 0 = DOES THAT HAVE ANYTHING TO DO WITH THE FACT THAT YOUR 3))
+                                                                                 ((O YOU ARE O (-HAPPY ELATED GLAD BETTER ) 0)
+ (NONE ( ( 0 )      ( I AM NOT SURE I UNDERSTAND YOU FULLY)
+ (PLEASE GO ON)                                                                  (HOW HAVE I HELPED YOU TO BE 5)
+                                                                                 (HAS YOUR TREATMENT MADE YOU 5) (WHAT MAKES YOU S JUST
+ (WHAT DOES THAT SUGGEST TO YOU)
+                                                                                 NOW) (CAN YOU EXPLAIN WHY YOU ARE SUDDENLY 5))
+ (DO YOU FEEL STRONGLY ABOUT DISCUSSING SUCH THINGS)))
+                                                                                 ((0 YOU WAS O) (=WAS))
+ (PERHAPS ((0)             (YOU DON'T SEEM QUITE CERTAIN)
+ (WHY THE UNCERTAIN TONE)                                                        ((0 YOU WAS O) (:WAS))
+
+ (CAN'T YOU BE MORE POSITIVE)                                                    ((O YOU (/BELIEF) YOU 0) (DO YOU REALLY THINK SO) (BUT YOU ARE
+
+ (YOU AREN'T SURE) (DON~T YOU KNOW)))                                            NOT SURE YOU 5) (DO YOU REALLY DOUBT YOU 5))
+
+ (MAYBE (=PERHAPS))                                                              ((0 YOU 0 (/BELIEF)                    O I 0) (=YOU))
+
+ (NAME 15 ((0)          (I     AM NOT {NTERESTED IN NAMES)                       ((0 YOU ARE O)
+
+ ( I ' V E TOLD YOU BEFORE, I DON'T CARE ABOUT NAMES -                           (IS     IT BECAUSE YOU ARE ~ THAT YOU CAME TO ME)
+
+ PLEASE CONTINUE)) )                                                             (HOW LONG HAVE YOU BEEN 4 )
+ PLEASE CONTINUE)) )                                                             (DO YOU B E L I E V E        IT NORMAL TO BE ~)
+ (DEUTSCH (=XFREMD))                                                             (DO YOU ENJOY BEING 4 ) )
+ (PRANCAIS (=XFREMD))                                                            ((0 YOU ( *         CANIT CANNOT) G) (HOW DO YOU KNOW YOU CAN'T ~)
+ (ITALIAN0        (=XFREMD))                                                     (HAVE YOU TRIED)
+ (ESPANOL (=XFREMD))                                                             (PERHAPS YOU COULD ~ NOW)
+ (XFREMD     ((0)     (I     AM SORRY,   I SPEAK ONLY ENGLISH)))                 (DO YOU REALLY WANT TO BE ABLE TO ~ ) )
+ (HELLO    ((0)      (HOW DO YOU DO,         PLEASE STATE YOUR PRORLFM)))        ((0     YOU DONIT 0 ) ( D O N I T        YOU      REALLY 4)(WHY DON'T YOU ~)
+ (COMPUTER        50 ( ( O )    (DO COMPUTERS WORRY YOU)                         (DO YOU WISH TO BE ABLE TO ~)                         (DOES THAT TROUBLE YOU))
+ (WHY DO YOU MENTION COMPUTERS)                (WHAT DO YOU THINK MACHINES       ((0    YOU FEEL 0)           (TELL ME MORE ABOUT SUCH PEELINGS)
+ HAVE TO DO WITH YOUR PROBLEM)                (DON'T YOU THINK COMPUTERS CAN     (DO YOU OFTEN FEEL ~)
+ HELP PEOPLE)          (WHAT ABOUT MACHINES WORRIES YOU) (WHAT                   (DO YOU ENJOY FEELING ~)
+ DO YOU THINK ABOUT MACHINES)))                                                  (OF WHAT DOES FEELING 4 REMIND YOU))
+ (MACHINE SO (=COMPUTER))                                                        ((0    YOU G I        0)   (PERHAPS IN YOUR FANTASY WE 3 EACH OTHER)
+ (MACHINES 50 (=COMPUTER))                                                       (DO YOU WISH TO 3 ME)
+ (COMPUTERS 50 (=COMPUTER))                                                      (YOU SEEN TO NEED TO 3 ME)
+ (AM = ARE ((O ARE YOU O) (DO YOU BELIEVE YOU ARE ~)                             (DO YOU 3 ANYONE E L S E ) )
+
+
+
+44           Communications                 o f t h e ACM                                                                Volume9            / Number l / January,        19h6
+                                                                                                                                                                                i/
+                  i:(
+
+
+                               ((o)     (YOU SAY 1)
+
+                               (CAN YOU ELABORATE ON THAT) ( ~ 0 Y~U SAY Z FOR SDME S~ECiAL                               REASON)        LETTERS--continued from p. 35
+                               ( T N A T t S QUITE I N T E R E S T I N G ) ) )
+                               (YOU = I         ((0    I REWIND YOU OF O)              (-DIT))                                                T h e , e c h n i q u e c o n s i s t s of t r a n s l a t i n g t h e code for t h e l e t t e r
+                               ((O     I ARE O)        (WHAT MAKES YOU THINK                  i A~ h )                                   " O " to tim co<tc for t h e n u m e r a l O w h e n e v e r it is e n e o m t t e r e d in t h e
+                               (OOES         IT PLEASE YOU TO RELIEVE                I A~: ~)                                                                                                "' " conszsts ()lily of i t e m s stleh as
+                                                                                                                                         i n p u t c h a r a c t e r s t r i n g . I f t h e ~,rltlg
+                               (DO YOU S O M E T I M E S       WISH    YOU W E R E     k)                                                z~ulnbers a n d nanles a n d it is Ilecessary to sort a l p h a b e t i c a l l y on
+ NOT ) )                       (PERHAPS        YOU W O U L 0     LIKE TO BE ~))
+                                                                                                                                         n a m e s , the o c c u r r e n c e o f a n a l p h a b e t i c c h a r a c t e r w i t h i n a n a m e
+                               ((0     ! O YOU)        (WHY DO YOU       THINK       I 3 YOU)
+                                                                                                                                         field is used to c a u s e t h e code for zero to be r e t r a n s l a t e d to t h e
+                               (YOU     LIKE    TO T H I N K     I 3 YOU    - DON'T          YOU)
+ ES 3)                         (WHAT M A K E S        YOU    THINK    I 3 YOU)
+                                                                                                                                         c(,de fop *he l e t l e r " O " b>" a r e s c a n of l h e c h a r a c t e r s in t h e n a m e
+                               (REALLY,        I 3 YOU)        (DO YOU WISH          TO R F L I E V F    I 3 YOU)
+                                                                                                                                         field.
+                               (REALLY,        I 3 YOU) ( 0 0 YOU WISH TO RELIEVE                        I   3 YOU)                           If no s o r t i n g is r e q u i r e d , t h e r e t r a n s l a t i o n c a n be avoided, pro-
+                              (SUPPOSE         I DID        3 YOU - WHAT W O U L D          THAT NEAt])                                  vided t h a t d e l i m i t e r s s u c h as F O R M A T or GO T O are spelled
+                              (DOES SOMEONE ELSE BELIEVE                    I 3 YOU))                                                    w i t h zero w i t h i n t h e r e c o g n i z e r s e g l n e n t of a t r a n s l a t o r . It, is also
+                              ((O     i O) (WE WERE DISCUSSING YOU - FiOT ME)                                                            n e c e s s a r y to redefine i d e n t i f i e r as
+                              (OH, I 3) (YOU'RE NOT REALLY TALKI~;G ABOUT ME - ARE YOU)
+                              (WHAT ARE YOUR FEELINGS NOW)))                                                                              identifier) : : = (letter::-                 ( i d e n t i f i e r ) (fetter3 i (identifier> (digit'., [
+                              (YES ((0)         (YOU SEEM QUITE POSITIVE) (YOU AqE SURE)                                                   (0) (ident.ifier)
+                              (!    SEE) (I UNDERSTAND)))
+                              (NO ((0)         (ARE YOU SAYING 'NO' JUST TO BE NEGATIVE)                                                 w h e r e it is u n d e r s t o o d t h a t t h e l e t t e r " O " is r e m o v e d from t h e
+                              (YOU ARE BEING A BIT NEGATIVE) (WHY NOT) (WHY ' N O ' ) ) )                                                s t a n d a r d definition of l e t t e r as in ALGOL 60. T h e redefinition per-
+                              (MY = YOUR 2 ((D YOUR 0 (/FAMILY)                          0)                                              m i t s t h e i n c l u s i o n of i d e n t i f i e r s s u c h as 017)11) or C O P S b u t p r e v e n t s
+                              (TELL ME MORE ABOUT YOUR FAMILY) ( WHO ELSE IN YOUR FAMILY                                                 the use of an identitier c o n s i s t i n g only of t h e r e p e a t e d i n a r k O.
+                              5) (YOUR ~) (WHAT ELSE COMES TO MIND WHEN YOU THINK OF                                                          T h i s t e c h n i q u e r e q u i r e s c o n s i s t e n c y of use a n d m i g h t result in
+                              YOUR ~))
+                                                                                                                                         c h a o s in a w a t ' e h o u s i n g o p e r a t i o n in w h i c h tile l e t t e r " 0 " is used
+                              ((0 YOUR O) (YOUR 3) (WHY DO YOU SAY YOUR ) )                                  (DOES THAT
+                                                                                                                                         ili p a r t s labels w i t h c h e c k d i g i t s .
+                              SUGGEST ANYTHING ELSE WHICH BELONGS TO YOU) (IS IT
+                              IMPORTANT TO YOU THAT 2 3 ) ) )
+                                                                                                                                                                                                          L. RICH:~.RD TUaNER
+                              (CAN ((0 CAN I            O)      (YOU BELIEVE I CAN ~ DON'T YOU) (:WHAT)                                                                     //: /                      ATASA Lewis Rcsvarch Cente:"
+                              (YOU WANT ME TO BE ABLE TO ~) (PERHAPS YOU WOULD LIKE TO BE                                                                               /                              CIeceland, Ohio
+                             ABLE TO 4 YOURSELF)) ((0 CAN YOU 0) (WHETHER OR NOT YOU CAN                                                                           /
+                             DEPENDS ON YOU MORE THAN ON ME) (DO YOU WANT TO BE ABLE TO ~)
+                             (PERHAPS YOU DON'T WANT TO ~) (=WHAT)))
+                                                                                                                                                               /
+                                                                                                                                                           /
+                             (WHAT ((O) (WHY DO YOU ASK) (DOES THAT QUESTION INTFRrST YOU)
+                             (WHAT IS IT YOU REALLY WANT TO KNOW)
+                                                                                                                                                       /
+                             (ARE SUCH QUESTIONS MUCH ON YOUR MIND)
+                                                                                                                                                   /
+                                                                                                                                    ~          J
+                             (WHAT ANSWER WOULD PLEASE YOU MOST)
+                             (WHAT DO YOU THINK) (WHAT COMES TO YOUR MIND WHFN YOU ASK THAT)                                        ~-~mments                          on    a Problem            in    Concurrent
+                             (HAVE YOu ASKED SUCH QUESTION BEFORE)                                                                      Programming                         Control
+                             (HAVE YOU ASKED ANYONE ELSE)))
+                             (BECAUSE ((0)             (IS THAT THE REAL REASON) (nON'T A~!Y OTHER RPASONS                               Dear E d i t o r :
+                             COME TO HIND) (DOES THAT REASON SEEM TO EXPLAIN ANYTHING ELSE)                                                I would like to c o r n m e n t o n M r . D i j k s t r a ' s s o l u t i o n [Solution
+                             (WHAT OTHER REASONS MIGHT THERE BE)))                                                                      of a p r o b l e m in c o n c u r r e n t p r o g r a m m i n g control. Comm A C M 8
+                             (WHY ((O WHY DON'T I 0) (DO YOU BELIEVE I DONIT 5) (PERHAPS I                                              (Sept. 1965), 569] to a m e s s y pr(~hlem t h a t is h a r d l y a c a d e m i c . We
+                             WILL 5 IN GOOD TIME) (SHOULD YOU 5 YOURSELF) (YOU WANT ME TO 5)
+                                                                                                                                        are u s i n g it n o w on a m u l t i p l e c o m p u t e r complex.
+                             (:WHAT))
+                                                                                                                                           W h e n t h e r e are o n l y t w o c o m p u t e r s , t h e a l g o r i t h m m a y be
+                             (=WHAT))
+                            ((0 WHY CAN'T YOU O) (DO YOU THINK YOU SHOULD BE ABLE TO S)
+                                                                                                                                        simplified to t h e f o l l o w i n g :
+                             (DO YOU WANT TO BE ABLE TO 5) (DO YOU BFLIFVE THIS WILL HELP YOU
+                                                                                                                                        B o o l e a n array bE0; 1) i n t e g e r k, i, j,
+                            TO 5) (HAVE YOU ANY IDEA WHY YOU CANfT 5) (=WHAT))
+                                                                                                                                        comment            T h i s is t h e p r o g r a m for c o m p u t e r i, w h i c h m a y he
+                             (= WHAT))
+                            (EVERYONE 2 ((O (* EVERYONE EVERYBODY NOBODY NOONF) O )
+                                                                                                                                          t i t h e r 0 or 1, c o m p u t e r j ~ i is t h e o t h e r one, 1 or 0;
+                            (REALLY, 2) (SURELY NOT 2) (CAN YOU THINK OF
+                                                                                                                                        CO: b (i) : = f a l s e ;
+                            ANYONE IN PARTICULAR) (WHO, FOR EXAMPLE) (YOU ARE THINKINO OF                                               CI: if k ~- i t h e n b e g i n
+                            A VERY SPECIAL PERSON)                                                                                      C2: i f not b(j) t h e n go to C2;
+              s             (WHO, MAY I ASK) (SOMEONE SPECIAL PERHAPS)                                                                           e l s e k := i; go t o C1 e n d ;
+                            (YOU HAVE A PARTICULAR PERSON IN MINn, DON'T YOU) (WHO DO YOU                                                        else critical section;
+                            THINK YOU'RE TALKING ABOUT)))                                                                                        b(i) := true;
+                            (EVERYBODY 2 (= EVERYONE))                                                                                           remainder of program;
+                            (NOBODY 2 (=EVERYONE))
+                                                                                                                                                 go to C0;
+                            (NOONE 2 (:EVERYONE))
+                                                                                                                                                 end
+                            (ALWAYS I         ((0)     (CAN YOU THINK OF A SPECIFIC EXAMPLE) (WHEN)
+                            (WHAT INCIDENT ARE YOU THINKING OF) (REALLY, ALWAYS)))                                                     Mr. Dijkstra has come up with a clever solution to a really
+                            (LIKE 10 ((O (*AM IS ARE WAS) 0 LIKE O) (=DIT))                                                         practical problem.
+                            ((0)      (NEWKEY)) )
+                            (DIT      ((O)    ( I N WHAT WAY)          (WHAT RESEMBLANCE DO YOU SEE)
+                                                                                                                                                                             HARRIS H Y$.[AN
+                            (WHAT DOES THAT SIMILARITY SUGGEST TO YOU)                                                                                                       Munitype
+                            (WHAT OTHER CONNECTIONS DO YOU SEE)                                                                                                              New York, New York
+                            (WHAT DO YOU SUPPOSE THAT RESEMBLANCE MEANS)
+                            (WHAT IS THE CONNECTION,                  DO YOU SUPPOSE)
+                            (COULD THERE REALLY BE SOME CONNECTION)
+                            (HOW)))
+         ;7                 ()
+
+
+
+
+                        I=~ECEIVi.3D S E P T E M B E R , 1965
+966      ::
+                        V o h u n e 9 / N u m b e r 1 / J a n u a r y , 1966                                                                                                        Communications            o f t i l e ACM                 45
