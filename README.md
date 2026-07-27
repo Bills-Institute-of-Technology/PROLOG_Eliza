@@ -4,6 +4,23 @@ A SWI-Prolog implementation of the classic ELIZA chatbot, originally created by 
 
 ---
 
+## Quick Start
+
+Primary implementation (Weizenbaum architecture):
+
+1. Start SWI-Prolog:
+   - `swipl`
+2. Load ELIZA:
+   - `[eliza].`
+3. Start the conversation loop:
+   - `eliza_run.`
+4. Exit the loop:
+   - Type `bye` or `bye.`
+
+See `Weizenbaum Implementation in This Repository` below for architecture and file layout details.
+
+---
+
 ## Background
 
 ELIZA is one of the earliest natural language processing programs. It simulates conversation by applying a set of pattern-matching and text-transformation rules drawn from a separate, interchangeable **script file**. The most famous script, **DOCTOR**, simulates a Rogerian psychotherapist and contains roughly 40 keyword-driven conversation patterns.
@@ -86,7 +103,34 @@ The main engine predicate `eliza(+Input, -Response)` uses `findall/3` and `sort/
 
 ---
 
+## Weizenbaum Implementation in This Repository
+
+This repository's primary ELIZA implementation follows Weizenbaum's 1966 architecture (keyword ranking, decomposition/reassembly rules, script-as-data, and fallback behavior) and is organized into:
+
+- `eliza.pl` — main user-facing entry point and interactive runtime loop
+- `src/eliza_engine.pl` — core transformation engine
+- `scripts/eliza_doctor_script.pl` — DOCTOR-style script data (keywords, decomposition rules, reassemblies, substitutions)
+
+Run the primary implementation in SWI-Prolog:
+
+1. Start SWI-Prolog:
+   - `swipl`
+2. Load the main module:
+   - `[eliza].`
+3. Start the interactive loop:
+   - `eliza_run.`
+4. Exit the loop:
+   - Type `bye` or `bye.` at the `You:` prompt.
+
+You can also call single-turn responses directly:
+
+- `eliza("I am unhappy", Response).`
+
+---
+
 ## Prolog Implementation of Shrader's 1973 BASIC Program
+
+Note: This is a bonus implementation provided as a single, independent file and is completely separate from the primary Weizenbaum architecture above.
 
 The file `eliza_shrader_1973.pl` is a SWI-Prolog translation of Jeff Shrager's 1973 BASIC ELIZA variant (as published in *Creative Computing*). It preserves the classic keyword scan, conjugation swaps, rotating response ranges, repeated-input handling, and an interactive conversation loop.
 
