@@ -14,6 +14,8 @@ Primary goal:
 
 ## Scope
 
+Note: User-facing runtime behavior (interactive loop/terminal I/O) is a project-level runtime add-on described in the **Runtime Layer** section, while the original paper primarily defines the transformation-engine model.
+
 ### In Scope
 - Script-driven ELIZA engine (engine separated from script data)
 - Keyword precedence/ranking
@@ -23,12 +25,12 @@ Primary goal:
 - `NEWKEY` behavior (abandon current key and retry next key)
 - Rule cycling to avoid repeating same response too frequently
 - Optional memory mechanism (deferred response retrieval)
-- Script-editability via data-driven representation
+- Script extensibility via data-driven representation
 
 ### Out of Scope (for initial implementation)
 - Full historical MAD-SLIP parity at internal data-structure level
 - Full psychological modeling / belief-structure inference
-- Runtime in-session script editor equivalent to historical `EDIT` command
+- Runtime in-session script editor equivalent to the historical `EDIT` command
 
 ---
 
@@ -57,6 +59,33 @@ Primary goal:
 
 ---
 
+## Runtime Layer (Project Add-On to Original Specification)
+
+The original Weizenbaum paper primarily specifies the ELIZA **transformation engine** and script mechanics. In this project, we add a separate **runtime layer** to provide a practical user-facing conversation experience in SWI-Prolog.
+
+This runtime layer is intentionally treated as an add-on, not a change to the historical core model.
+
+### Runtime responsibilities
+- Start and reset a session
+- Read user input from terminal/REPL
+- Call the core engine for each turn
+- Print formatted ELIZA responses
+- Provide clean exit controls (e.g., `bye`, `bye.`)
+
+### Separation of concerns
+- **Engine layer**: keyword scan, decomposition/reassembly, ranking, fallback, optional memory behavior
+- **Runtime layer**: interactive loop, prompt/response I/O, session command handling
+
+### Suggested runtime API
+- `eliza_run/0` — starts an interactive loop
+- `eliza_reset/0` — clears per-session mutable state
+- `eliza_reply/2` or `eliza_reply/3` — single-turn response generation
+
+### Implementation note
+This follows the same pattern as the `eliza_shrader_1973.pl` translation in this repository, where the transformation logic exists independently and the discussion loop is provided by an explicit runtime predicate.
+
+---
+
 ## Recommended Project Structure (Prolog Best Practice)
 
 A split between engine and script is strongly recommended.
@@ -69,7 +98,7 @@ A split between engine and script is strongly recommended.
   - Shared predicates/helpers for rule term normalization/validation
 - `scripts/doctor_script.pl`
   - Script facts (keywords, decomposition rules, reassemblies, substitutions, tags/classes)
-- `scripts/shrager_script.pl` (optional separate historical variant)
+- `scripts/shrader_script.pl` (optional separate historical variant)
 - `test/eliza_engine_tests.pl`
   - PlUnit tests for matching, ranking, control operators, substitutions
 

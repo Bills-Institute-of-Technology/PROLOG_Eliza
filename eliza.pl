@@ -2,30 +2,62 @@
 %   @param  Stimuli is a list of atoms (words).
 %   @author Richard A. O'Keefe (The Craft of Prolog)
 
-eliza(Stimuli, Response) :-
-    template(InternalStimuli, InternalResponse),
-    match(InternalStimuli, Stimuli),
-    match(InternalResponse, Response),
-    !.
+:- module(eliza,
+    [ eliza/2,
+      eliza_run/0,
+      eliza_reset/0,
+      eliza_start/0
+    ]).
 
-template([s([i,am]),s(X)], [s([why,are,you]),s(X),w('?')]).
-template([w(i),s(X),w(you)], [s([why,do,you]),s(X),w(me),w('?')]).
+:- use_module(library(readutil)).
+:- use_module('src/eliza_engine').
+:- use_module('scripts/eliza_doctor_script').
+
+eliza_start :-
+    writeln("HOW DO YOU DO. PLEASE TELL ME YOUR PROBLEM.").
+
+eliza_reset :-
+    eliza_engine:eliza_engine_reset(eliza_doctor_script).
+
+eliza(Input, Response) :-
+    eliza_engine:eliza_engine_reply(eliza_doctor_script, Input, Response).
+
+eliza_run :-
+    eliza_reset,
+    eliza_start,
+    eliza_loop.
+
+eliza_loop :-
+    write('You: '),
+    flush_output,
+    read_line_to_string(user_input, Input),
+    (   Input == end_of_file
+    ->  writeln('ELIZA: Goodbye.')
+    ;   is_exit_input(Input)
+    ->  writeln('ELIZA: Goodbye.')
+    ;   eliza(Input, Response),
+        format('ELIZA: ~s~n', [Response]),
+        eliza_loop
+    ).
+
+is_exit_input(Input) :-
+    string_lower(Input, Lower),
+    memberchk(Lower, ["bye", "bye."]).
 
 
-match([],[]).
-match([Item|Items],[Word|Words]) :-
-    match(Item, Items, Word, Words).
 
-match(w(Word), Items, Word, Words) :-
-    match(Items, Words).
-match(s([Word|Seg]), Items, Word, Words0) :-
-    append(Seg, Words1, Words0),
-    match(Items, Words1).
+
+
+
+
+
+
 
 
 /** <examples>
 
-?- eliza([i, am, very, hungry], Response).
-?- eliza([i, love, you], Response).
+?- eliza("I am very unhappy", Response).
+?- eliza([i, feel, sad], Response).
+?- eliza_run.
 
 */
